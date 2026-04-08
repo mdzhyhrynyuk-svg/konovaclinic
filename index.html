@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стоматологія Тетяни Конової — Теремки, Київ | З 2004 року</title>
+    <meta name="description" content="Сучасна стоматологія у ЖК Лікоград, Теремки, Київ. Лікування без болю, імплантація, вініри, ортодонтія. Google рейтинг 4.9 ⭐. Запис онлайн.">
+    <meta property="og:title" content="Стоматологія Тетяни Конової — Теремки, Київ">
+    <meta property="og:description" content="Сучасна стоматологія без болю та страху. 7000+ пацієнтів, 20+ років, рейтинг 4.9 ⭐">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://konovaclinic.com">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─────────────────────────────────────────
+           RESET & BASE
+        ───────────────────────────────────────── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green-deep:   #2A352E;
+            --green-dark:   #1E2822;
+            --green-mid:    #3D4F44;
+            --lime:         #72A914;
+            --lime-muted:   rgba(114,169,20,0.15);
+            --white:        #FFFFFF;
+            --off-white:    #F8F6F2;
+            --ink:          #1A1A1A;
+            --muted:        #6B7280;
+            --divider:      rgba(255,255,255,0.10);
+            --divider-light:#E5E1DC;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', Arial, sans-serif;
+            background: var(--white);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ─────────────────────────────────────────
+           HEADER / NAV
+        ───────────────────────────────────────── */
+        .site-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Header becomes solid when past hero */
+        .site-header.scrolled {
+            background: rgba(42, 53, 46, 0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        /* Hero zone: header over white — use dark text */
+        .site-header.on-white .logo-text { color: var(--green-deep); }
+        .site-header.on-white .nav-link  { color: var(--green-deep); }
+        .site-header.on-white .nav-link:hover { color: var(--lime); }
+        .site-header.on-white .btn-nav {
+            background: var(--green-deep);
+            color: var(--white);
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav { display: flex; align-items: center; gap: 2rem; }
+
+        .nav-link {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            letter-spacing: 0.01em;
+            transition: color 0.25s;
+        }
+        .nav-link:hover { color: var(--lime); }
+
+        .btn-nav {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--green-deep);
+            background: var(--lime);
+            text-decoration: none;
+            padding: 0.55rem 1.25rem;
+            border-radius: 100px;
+            letter-spacing: 0.02em;
+            transition: background 0.25s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .btn-nav:hover { background: #85c416; transform: translateY(-1px); }
+
+        /* ─────────────────────────────────────────
+           HERO — SCROLL SCRUB VIDEO
+        ───────────────────────────────────────── */
+
+        /* Tall wrapper creates the scroll distance for the pinned hero */
+        .hero-scroll-wrapper {
+            height: 550vh; /* 5.5× viewport = scroll space for 8s video */
+            position: relative;
+        }
+
+        /* Pinned container — stays fixed while user scrolls through wrapper */
+        .hero-pin {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Video — centered, covers most of viewport */
+        #tooth-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            /* Start fully transparent — fades in as page loads */
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        #tooth-video.ready { opacity: 1; }
+
+        /* Overlay content on top of video */
+        .hero-overlay {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 1.5rem;
+            pointer-events: none;
+        }
+
+        /* Top label — visible at scroll start */
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        .hero-title em {
+            font-style: italic;
+            color: var(--lime);
+        }
+
+        .hero-sub {
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .hero-cta-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: auto;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--green-deep);
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 100px;
+            transition: background 0.25s, transform 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover { background: var(--green-mid); transform: translateY(-2px); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--ink);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 100px;
+            border: 1.5px solid var(--divider-light);
+            transition: border-color 0.25s, transform 0.2s, color 0.25s;
+        }
+        .btn-secondary:hover { border-color: var(--lime); color: var(--lime); transform: translateY(-2px); }
+
+        /* Stats strip at bottom of hero */
+        .hero-stats {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 0; right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 3.5rem;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.3rem;
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0;
+            animation: hint-pulse 2s ease-in-out infinite;
+        }
+        .scroll-hint span {
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .scroll-hint svg { color: var(--lime); }
+
+        @keyframes hint-pulse {
+            0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.9; transform: translateX(-50%) translateY(4px); }
+        }
+
+        /* Progress bar at bottom of hero */
+        .video-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--lime);
+            width: 0%;
+            transition: width 0.05s linear;
+            z-index: 20;
+        }
+
+        /* Seamless gradient transition hero → next section */
+        .hero-gradient-fade {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--white));
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* ─────────────────────────────────────────
+           ABOUT SECTION
+        ───────────────────────────────────────── */
+        .section-about {
+            background: var(--white);
+            padding: 7rem 0 5rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .container-narrow {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--lime);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+        }
+        .section-title em { font-style: italic; color: var(--lime); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: #4B5563;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+        .feat {
+            padding: 1.25rem;
+            background: var(--off-white);
+            border-radius: 12px;
+            border-left: 3px solid var(--lime);
+        }
+        .feat h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 0.35rem;
+        }
+        .feat p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
+        .about-image-wrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .about-image-wrap img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            display: block;
+            border-radius: 20px;
+        }
+        .about-badge {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            background: var(--green-deep);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .about-badge .badge-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--lime);
+            line-height: 1;
+        }
+        .about-badge .badge-text { font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 0.2rem; }
+
+        /* ─────────────────────────────────────────
+           SERVICES
+        ───────────────────────────────────────── */
+        .section-services {
+            background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-dark) 100%);
+            padding: 7rem 0;
+        }
+
+        .section-services .section-label { color: var(--lime); }
+        .section-services .section-title { color: var(--white); }
+        .section-services .section-title em { color: var(--lime); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.25s, transform 0.25s, border-color 0.25s;
+            display: block;
+        }
+        .service-card:hover {
+            background: rgba(114,169,20,0.12);
+            border-color: rgba(114,169,20,0.3);
+            transform: translateY(-3px);
+        }
+
+        .service-icon {
+            width: 44px; height: 44px;
+            background: var(--lime-muted);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .service-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+        }
+
+        .service-desc {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-price {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--lime);
+        }
+
+        /* ─────────────────────────────────────────
+           TEAM
+        ───────────────────────────────────────── */
+        .section-team {
+            background: var(--off-white);
+            padding: 7rem 0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .doctor-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: center;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .doctor-card:hover {
+            box-shadow: 0 16px 48px rgba(0,0,0,0.10);
+            transform: translateY(-4px);
+        }
+
+        .doctor-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .doctor-info { padding: 1.25rem; }
+        .doctor-exp {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--lime);
+            background: var(--lime-muted);
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            margin-bottom: 0.6rem;
+        }
+        .doctor-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+        .doctor-spec {
+            font-size: 0.75rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        .doctor-cta {
+            display: block;
+            margin: 1rem 1.25rem 1.25rem;
+            background: var(--green-deep);
+            color: var(--white);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.6rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .doctor-cta:hover { background: var(--lime); color: var(--green-deep); }
+
+        /* ─────────────────────────────────────────
+           WHY US
+        ───────────────────────────────────────── */
+        .section-why {
+            background: var(--green-deep);
+            padding: 7rem 0;
+        }
+        .section-why .section-label { color: var(--lime); }
+        .section-why .section-title { color: var(--white); }
+        .section-why .section-title em { color: var(--lime); }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 3rem;
+        }
+
+        .why-item {
+            background: var(--green-deep);
+            padding: 2rem;
+            transition: background 0.3s;
+        }
+        .why-item:hover { background: var(--green-mid); }
+
+        .why-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--lime);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 0.75rem;
+        }
+        .why-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+        }
+        .why-text { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+        /* ─────────────────────────────────────────
+           REVIEWS
+        ───────────────────────────────────────── */
+        .section-reviews {
+            background: var(--white);
+            padding: 7rem 0;
+        }
+
+        .reviews-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .rating-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--off-white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+        }
+        .rating-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1;
+        }
+        .rating-stars { font-size: 1.1rem; margin-bottom: 0.2rem; }
+        .rating-label { font-size: 0.72rem; color: var(--muted); }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .review-card {
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        .review-text {
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: #374151;
+            margin-bottom: 1.25rem;
+            font-style: italic;
+        }
+        .review-text::before { content: '"'; color: var(--lime); font-size: 1.5rem; font-style: normal; }
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .reviewer-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--green-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            color: var(--lime);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .reviewer-name { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+        .reviewer-date { font-size: 0.72rem; color: var(--muted); }
+
+        /* ─────────────────────────────────────────
+           BOOKING / CTA SECTION
+        ───────────────────────────────────────── */
+        .section-booking {
+            background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-dark) 100%);
+            padding: 7rem 0;
+        }
+
+        .booking-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .booking-left .section-label { color: var(--lime); }
+        .booking-left .section-title { color: var(--white); }
+        .booking-left .section-title em { color: var(--lime); }
+
+        .booking-left p { font-size: 0.95rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 1.5rem; }
+
+        .messengers {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .messenger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.55rem 1rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.85);
+            transition: border-color 0.25s, color 0.25s, background 0.25s;
+        }
+        .messenger-btn:hover {
+            border-color: var(--lime);
+            color: var(--lime);
+        }
+
+        .booking-form {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.25s;
+            appearance: none;
+        }
+        .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+        .form-group input:focus,
+        .form-group select:focus { border-color: var(--lime); }
+        .form-group select option { background: var(--green-deep); }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--lime);
+            color: var(--green-deep);
+            border: none;
+            border-radius: 100px;
+            padding: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.03em;
+            transition: background 0.25s, transform 0.2s;
+            margin-top: 0.5rem;
+        }
+        .btn-submit:hover { background: #85c416; transform: translateY(-2px); }
+
+        /* ─────────────────────────────────────────
+           FOOTER
+        ───────────────────────────────────────── */
+        .site-footer {
+            background: var(--green-dark);
+            padding: 3rem 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-info { font-size: 0.78rem; color: rgba(255,255,255,0.45); text-align: center; }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.4); text-decoration: none; }
+        .footer-links a:hover { color: var(--lime); }
+
+        /* ─────────────────────────────────────────
+           FLOATING CONTACT
+        ───────────────────────────────────────── */
+        .float-contact {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
+
+        .float-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--green-deep);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.6rem 1rem 0.6rem 0.8rem;
+            border-radius: 100px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            transition: transform 0.2s, background 0.2s;
+            white-space: nowrap;
+        }
+        .float-btn:hover { transform: translateX(-4px); background: var(--lime); color: var(--green-deep); }
+        .float-btn-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--lime); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .float-btn.tg .float-btn-icon { background: #29B6F6; }
+        .float-btn.vb .float-btn-icon { background: #7360f2; }
+
+        /* ─────────────────────────────────────────
+           ANIMATIONS — initial states (GSAP takes over)
+        ───────────────────────────────────────── */
+        .reveal { opacity: 0; transform: translateY(28px); }
+
+        /* ─────────────────────────────────────────
+           RESPONSIVE
+        ───────────────────────────────────────── */
+        @media (max-width: 900px) {
+            nav .nav-link { display: none; }
+            .about-grid, .booking-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .about-image-wrap { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .site-header { padding: 1rem 1.25rem; }
+            .hero-stats { gap: 2rem; bottom: 1.5rem; }
+            .stat-num { font-size: 1.5rem; }
+            .reviews-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header class="site-header on-white" id="site-header">
+    <a href="#" class="logo-text">Стоматологія Конової</a>
+    <nav>
+        <a href="#about" class="nav-link">Про клініку</a>
+        <a href="#services" class="nav-link">Послуги</a>
+        <a href="#team" class="nav-link">Лікарі</a>
+        <a href="#reviews" class="nav-link">Відгуки</a>
+        <a href="#prices" class="nav-link">Ціни</a>
+        <a href="#booking" class="btn-nav">Записатися →</a>
+    </nav>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO — SCROLL VIDEO SCRUB
+══════════════════════════════════ -->
+<div class="hero-scroll-wrapper" id="hero-wrapper">
+    <div class="hero-pin" id="hero-pin">
+
+        <!-- Video: tooth destruction → restoration -->
+        <video
+            id="tooth-video"
+            src="assets/video/Tooth_Restoration_Animation.mp4"
+            muted
+            playsinline
+            preload="auto"
+        ></video>
+
+        <!-- Text overlay — fades out as video progresses -->
+        <div class="hero-overlay" id="hero-overlay">
+            <p class="hero-eyebrow" id="hero-eyebrow">Стоматологія Тетяни Конової · Київ, Теремки · з 2004 року</p>
+            <h1 class="hero-title" id="hero-title">
+                Здорова усмішка —<br><em>ваша краща інвестиція</em>
+            </h1>
+            <p class="hero-sub" id="hero-sub">
+                Сучасна стоматологія без болю та страху.<br>
+                Дбаємо про вашу посмішку вже 20 років.
+            </p>
+            <div class="hero-cta-row" id="hero-cta">
+                <a href="#booking" class="btn-primary">Записатися на прийом</a>
+                <a href="tel:+380674016558" class="btn-secondary">+38 067 401 65 58</a>
+            </div>
+        </div>
+
+        <!-- Stats at bottom -->
+        <div class="hero-stats" id="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num">20<span style="color:var(--lime)">+</span></div>
+                <div class="stat-label">Років досвіду</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">7000<span style="color:var(--lime)">+</span></div>
+                <div class="stat-label">Пацієнтів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">4.9<span style="font-size:1.2rem">⭐</span></div>
+                <div class="stat-label">Google рейтинг</div>
+            </div>
+        </div>
+
+        <!-- Scroll hint (visible only at scroll=0) -->
+        <div class="scroll-hint" id="scroll-hint">
+            <span>Прокрути</span>
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+                <path d="M8 3v10M8 13l-3-3M8 13l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="video-progress" id="video-progress"></div>
+
+        <!-- Seamless white fade at bottom -->
+        <div class="hero-gradient-fade"></div>
+
+    </div><!-- /hero-pin -->
+</div><!-- /hero-scroll-wrapper -->
+
+
+<!-- ══════════════════════════════════
+     ABOUT
+══════════════════════════════════ -->
+<section class="section-about" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-text">
+                <p class="section-label reveal">Про клініку</p>
+                <h2 class="section-title reveal">Лікуємо з турботою —<br><em>без болю і страху</em></h2>
+                <p class="reveal">Стоматологія Тетяни Конової — сучасна клініка у Голосіївському районі Києва (Теремки, ЖК Лікоград). Понад 20 років ми поєднуємо новітні технології з індивідуальним підходом до кожного пацієнта.</p>
+                <p class="reveal">5 сертифікованих лікарів. Цифровий рентген, мікроскоп, 3D-сканер. Стерилізація класу B. Ліцензія МОЗ України.</p>
+                <div class="about-features">
+                    <div class="feat reveal">
+                        <h4>Сучасне обладнання</h4>
+                        <p>Цифровий та панорамний рентген, мікроскоп, Kavo Prophyflex, 3D-сканер</p>
+                    </div>
+                    <div class="feat reveal">
+                        <h4>Безпечне лікування</h4>
+                        <p>Стерилізація клас B, сучасна анестезія, одноразові матеріали</p>
+                    </div>
+                    <div class="feat reveal">
+                        <h4>Прозорі ціни</h4>
+                        <p>Кошторис до початку лікування. Ніяких прихованих доплат</p>
+                    </div>
+                    <div class="feat reveal">
+                        <h4>Для захисників 🇺🇦</h4>
+                        <p>Безкоштовна стоматологічна допомога військовим ЗСУ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image-wrap reveal">
+                <img
+                    src="https://i.imgur.com/JuKOsat.jpeg"
+                    alt="Конова Тетяна Володимирівна — засновниця та головний лікар"
+                    loading="lazy"
+                >
+                <div class="about-badge">
+                    <div class="badge-num">27</div>
+                    <div class="badge-text">років досвіду<br>засновниці</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SERVICES
+══════════════════════════════════ -->
+<section class="section-services" id="services">
+    <div class="container">
+        <p class="section-label reveal">Наші послуги</p>
+        <h2 class="section-title reveal">Лікування, яке<br><em>змінює усмішку і тебе</em></h2>
+        <div class="services-grid">
+            <a href="http://konovaclinic.com/likuvannyazubiv" class="service-card reveal">
+                <div class="service-icon">🦷</div>
+                <div class="service-name">Лікування зубів</div>
+                <div class="service-desc">Карієс, пульпіт, реставрація. Безболісно, сучасними матеріалами.</div>
+                <div class="service-price">від 3 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/likuvannyakanaliv" class="service-card reveal">
+                <div class="service-icon">🔬</div>
+                <div class="service-name">Лікування каналів</div>
+                <div class="service-desc">Під мікроскопом. Пульпіт, періодонтит будь-якої складності.</div>
+                <div class="service-price">від 10 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/implantaciazubiv" class="service-card reveal">
+                <div class="service-icon">🪛</div>
+                <div class="service-name">Імплантація зубів</div>
+                <div class="service-desc">Встановлення імплантів, пластика кістки та ясен. Повний супровід.</div>
+                <div class="service-price">від 18 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/viniry" class="service-card reveal">
+                <div class="service-icon">✨</div>
+                <div class="service-name">Вініри</div>
+                <div class="service-desc">Ультратонкі керамічні накладки для ідеальної посмішки.</div>
+                <div class="service-price">від 7 500 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/protezuvannya" class="service-card reveal">
+                <div class="service-icon">👑</div>
+                <div class="service-name">Протезування</div>
+                <div class="service-desc">Коронки, мости, знімні протези. Індивідуальний підбір.</div>
+                <div class="service-price">від 5 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/ortodontiya" class="service-card reveal">
+                <div class="service-icon">😁</div>
+                <div class="service-name">Ортодонтія</div>
+                <div class="service-desc">Брекети для дітей та дорослих. Виправлення прикусу.</div>
+                <div class="service-price">від 5 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/parodontologiya" class="service-card reveal">
+                <div class="service-icon">🩺</div>
+                <div class="service-name">Пародонтологія</div>
+                <div class="service-desc">Лікування ясен, кюретаж, Vector-терапія, плазмотерапія.</div>
+                <div class="service-price">від 3 500 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/dytyachastomatologiya" class="service-card reveal">
+                <div class="service-icon">🧒</div>
+                <div class="service-name">Дитяча стоматологія</div>
+                <div class="service-desc">Лікування та профілактика для дітей. Навчання гігієні.</div>
+                <div class="service-price">Індивідуально</div>
+            </a>
+            <a href="http://konovaclinic.com/chistkazubiv" class="service-card reveal">
+                <div class="service-icon">🪥</div>
+                <div class="service-name">Чистка зубів</div>
+                <div class="service-desc">Kavo Prophyflex Soniflex. Видалення нальоту і каменю.</div>
+                <div class="service-price">від 1 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/vidbilubannya" class="service-card reveal">
+                <div class="service-icon">💎</div>
+                <div class="service-name">Відбілювання</div>
+                <div class="service-desc">Система Beyond. Результат за одне відвідування.</div>
+                <div class="service-price">від 7 000 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/diagnostika" class="service-card reveal">
+                <div class="service-icon">📷</div>
+                <div class="service-name">Діагностика</div>
+                <div class="service-desc">КЛКТ, 3D-сканування, цифровий рентген, фотопротокол.</div>
+                <div class="service-price">від 300 грн</div>
+            </a>
+            <a href="http://konovaclinic.com/konsultacia" class="service-card reveal">
+                <div class="service-icon">💬</div>
+                <div class="service-name">Консультація</div>
+                <div class="service-desc">Первинний огляд, план лікування, відповіді на питання.</div>
+                <div class="service-price">800 грн</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     TEAM
+══════════════════════════════════ -->
+<section class="section-team" id="team">
+    <div class="container">
+        <p class="section-label reveal">Наша команда</p>
+        <h2 class="section-title reveal">Лікарі, яким<br><em>довіряють тисячі</em></h2>
+        <div class="team-grid">
+            <div class="doctor-card reveal">
+                <img class="doctor-photo" src="https://i.imgur.com/JuKOsat.jpeg" alt="Конова Тетяна Володимирівна" loading="lazy">
+                <div class="doctor-info">
+                    <span class="doctor-exp">27 років</span>
+                    <div class="doctor-name">Конова Тетяна Володимирівна</div>
+                    <div class="doctor-spec">Стоматолог, пародонтолог, дитячий стоматолог</div>
+                </div>
+                <a href="#booking" class="doctor-cta">Записатися</a>
+            </div>
+            <div class="doctor-card reveal">
+                <img class="doctor-photo" src="https://i.imgur.com/797A61N.jpeg" alt="Марченко Богдан Олександрович" loading="lazy">
+                <div class="doctor-info">
+                    <span class="doctor-exp">7 років</span>
+                    <div class="doctor-name">Марченко Богдан Олександрович</div>
+                    <div class="doctor-spec">Стоматолог-ортопед</div>
+                </div>
+                <a href="#booking" class="doctor-cta">Записатися</a>
+            </div>
+            <div class="doctor-card reveal">
+                <img class="doctor-photo" src="https://i.imgur.com/wMEA2ch.jpeg" alt="Харрат Ірина Олександрівна" loading="lazy">
+                <div class="doctor-info">
+                    <span class="doctor-exp">43 роки</span>
+                    <div class="doctor-name">Харрат Ірина Олександрівна</div>
+                    <div class="doctor-spec">Стоматолог-ортодонт</div>
+                </div>
+                <a href="#booking" class="doctor-cta">Записатися</a>
+            </div>
+            <div class="doctor-card reveal">
+                <img class="doctor-photo" src="https://i.imgur.com/0zppWkX.jpeg" alt="Янощук Арсен Ігорович" loading="lazy">
+                <div class="doctor-info">
+                    <span class="doctor-exp">8 років</span>
+                    <div class="doctor-name">Янощук Арсен Ігорович</div>
+                    <div class="doctor-spec">Стоматолог-ортопед</div>
+                </div>
+                <a href="#booking" class="doctor-cta">Записатися</a>
+            </div>
+            <div class="doctor-card reveal">
+                <img class="doctor-photo" src="https://i.imgur.com/AOtqyRu.jpeg" alt="Ель Махуфі Амін" loading="lazy">
+                <div class="doctor-info">
+                    <span class="doctor-exp">9 років</span>
+                    <div class="doctor-name">Ель Махуфі Амін</div>
+                    <div class="doctor-spec">Хірург, ендодонтист</div>
+                </div>
+                <a href="#booking" class="doctor-cta">Записатися</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     WHY US
+══════════════════════════════════ -->
+<section class="section-why" id="why">
+    <div class="container">
+        <p class="section-label reveal">Чому ми</p>
+        <h2 class="section-title reveal">7 причин довіряти<br><em>нашій клініці</em></h2>
+        <div class="why-grid">
+            <div class="why-item reveal">
+                <div class="why-num">01</div>
+                <div class="why-title">Лікування без болю та страху</div>
+                <div class="why-text">Сучасна анестезія. Ваш комфорт — наш пріоритет на кожному етапі.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">02</div>
+                <div class="why-title">Новітнє цифрове обладнання</div>
+                <div class="why-text">Мікроскоп, цифровий рентген, 3D-сканер, Kavo Prophyflex.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">03</div>
+                <div class="why-title">Прозорі ціни та гарантія</div>
+                <div class="why-text">Кошторис до початку. Кожен етап і результат погоджується з пацієнтом.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">04</div>
+                <div class="why-title">Сертифіковані спеціалісти</div>
+                <div class="why-text">Українські та міжнародні сертифікати. Щорічне підвищення кваліфікації.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">05</div>
+                <div class="why-title">Зручний онлайн-запис</div>
+                <div class="why-text">Телефон, форма на сайті або месенджер — записуйтесь як зручно.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">06</div>
+                <div class="why-title">Комфорт та безпека</div>
+                <div class="why-text">Стерилізація клас B, одноразові матеріали, приємна атмосфера.</div>
+            </div>
+            <div class="why-item reveal">
+                <div class="why-num">07</div>
+                <div class="why-title">Турбота про кожного</div>
+                <div class="why-text">Подарунки на день народження, засоби гігієни, безкоштовна допомога ЗСУ 🇺🇦</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     REVIEWS
+══════════════════════════════════ -->
+<section class="section-reviews" id="reviews">
+    <div class="container">
+        <div class="reviews-header">
+            <div>
+                <p class="section-label reveal">Відгуки</p>
+                <h2 class="section-title reveal">Що кажуть<br><em>наші пацієнти</em></h2>
+            </div>
+            <div class="rating-badge reveal">
+                <div class="rating-num">4.9</div>
+                <div>
+                    <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-label">рейтинг у Google</div>
+                </div>
+            </div>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card reveal">
+                <p class="review-text">Протягом 22 років довіряємо всією родиною. Турботливе ставлення, професійний та індивідуальний підхід. Якість лікування гарантована на багато років.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">Ю</div>
+                    <div>
+                        <div class="reviewer-name">Юлія Гуня</div>
+                        <div class="reviewer-date">Рік тому · Google</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <p class="review-text">Лікуємо зубки всією сімʼєю вже 6-й рік. Займаються 3 стоматологи та ортодонт. Зручний сервіс, адміністратори нагадують про візити. Вартість відповідає якості.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">А</div>
+                    <div>
+                        <div class="reviewer-name">Anastasia Sobotovich</div>
+                        <div class="reviewer-date">10 місяців тому · Google</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <p class="review-text">Три лікарі в інших клініках наполягали на видаленні зуба. Тут мені врятували зуба — і мене врятували від передчасної імплантації. Щиро вдячна.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">L</div>
+                    <div>
+                        <div class="reviewer-name">Larisa Demjanchuk</div>
+                        <div class="reviewer-date">5 місяців тому · Google</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <p class="review-text">Гарна клініка, людяність, професіоналізм найвищого ґатунку. Небайдужість до пацієнта, відповідальність — все це я знайшла саме тут. Рекомендую.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">Л</div>
+                    <div>
+                        <div class="reviewer-name">Любов</div>
+                        <div class="reviewer-date">8 місяців тому · Google</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <p class="review-text">Заради місцевих спеціалістів варто їздити понад годину! Особливе дякую лікарю — уважність до деталей і до комфорту. Фотографує, показує, пояснює.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">D</div>
+                    <div>
+                        <div class="reviewer-name">Daria Balynska</div>
+                        <div class="reviewer-date">Рік тому · Google</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card reveal">
+                <p class="review-text">Затишна сучасна установа. Персонал ввічливий та уважний. Видаляла зуб і побоювалась ускладнень, але була приємно вражена швидкою та професійною роботою.</p>
+                <div class="reviewer">
+                    <div class="reviewer-avatar">О</div>
+                    <div>
+                        <div class="reviewer-name">Олена Муравська</div>
+                        <div class="reviewer-date">4 місяці тому · Google</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:2.5rem;">
+            <a href="https://www.google.com/maps?cid=7243587221728030793" target="_blank" class="btn-secondary" style="display:inline-flex;">
+                Всі відгуки в Google →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     BOOKING
+══════════════════════════════════ -->
+<section class="section-booking" id="booking">
+    <div class="container">
+        <div class="booking-inner">
+            <div class="booking-left">
+                <p class="section-label reveal">Запис</p>
+                <h2 class="section-title reveal">Запишіться<br><em>прямо зараз</em></h2>
+                <p class="reveal">Оберіть зручний спосіб зв'язку — відповімо і запишемо вас у найближчий вільний час. Нагадаємо про візит за добу.</p>
+                <p class="reveal" style="font-size:0.82rem; color:rgba(255,255,255,0.45);">📍 м. Київ, вул. Степана Рудницького 3/7, Голосіївський район, ЖК Лікоград<br>🕐 Пн–Пт 10:00–20:00, Сб 10:00–18:00</p>
+                <div class="messengers reveal" style="margin-top:1.5rem;">
+                    <a href="tel:+380674016558" class="messenger-btn">📞 Телефон</a>
+                    <a href="https://t.me/+380674016558" class="messenger-btn">✈️ Telegram</a>
+                    <a href="viber://chat?number=+380674016558" class="messenger-btn">💬 Viber</a>
+                    <a href="https://www.instagram.com/konovaclinic/" class="messenger-btn">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="booking-form reveal">
+                <div class="form-title">Онлайн-запис</div>
+                <form onsubmit="return false;">
+                    <div class="form-group">
+                        <label>Ваше ім'я</label>
+                        <input type="text" placeholder="Як вас звати?">
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="tel" placeholder="+38 (___) ___-__-__">
+                    </div>
+                    <div class="form-group">
+                        <label>Послуга</label>
+                        <select>
+                            <option value="">Оберіть послугу...</option>
+                            <option>Консультація (800 грн)</option>
+                            <option>Лікування зубів</option>
+                            <option>Лікування каналів</option>
+                            <option>Імплантація</option>
+                            <option>Вініри</option>
+                            <option>Протезування</option>
+                            <option>Ортодонтія</option>
+                            <option>Чистка зубів</option>
+                            <option>Відбілювання</option>
+                            <option>Дитяча стоматологія</option>
+                            <option>Діагностика</option>
+                            <option>Інше</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Зручний час</label>
+                        <input type="text" placeholder="Напр: вівторок після 15:00">
+                    </div>
+                    <button type="submit" class="btn-submit">Надіслати заявку →</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-logo">Стоматологія Тетяни Конової</div>
+            <div class="footer-info">
+                © 2025 · ЖК Лікоград, Теремки, Київ<br>
+                +38 (067) 401-65-58 · Ліцензія МОЗ України
+            </div>
+            <div class="footer-links">
+                <a href="http://konovaclinic.com/oferta">Оферта</a>
+                <a href="http://konovaclinic.com/garantii">Гарантії</a>
+                <a href="http://konovaclinic.com/en">EN</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     FLOATING CONTACT BUTTONS
+══════════════════════════════════ -->
+<div class="float-contact">
+    <a href="https://t.me/+380674016558" class="float-btn tg" target="_blank">
+        <span class="float-btn-icon">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+                <path fill="white" d="M21.9 4.3L18.5 19.7c-.2 1-.9 1.3-1.9.8l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1L17.5 7c.4-.4-.1-.5-.7-.1L7 13.3 2.1 11.8c-1-.3-1-.9.2-1.4l18.6-7.2c.9-.3 1.6.2 1.1 1.1z"/>
+            </svg>
+        </span>
+        Telegram
+    </a>
+    <a href="viber://chat?number=+380674016558" class="float-btn vb">
+        <span class="float-btn-icon">
+            <svg width="14" height="14" fill="white" viewBox="0 0 24 24">
+                <path d="M11.4 1C6 1.5 2 5.8 2 11.3c0 2.9 1.2 5.6 3.2 7.6l-1 3.7 3.8-1c1.5.8 3.2 1.3 5 1.3 5.9 0 10.7-4.8 10.7-10.7C23.7 5.8 18.2.5 11.4 1zm5.4 14.6c-.2.6-.7 1.1-1.4 1.3-.4.1-.8.1-1.2 0-2-.6-3.8-1.7-5.2-3.1-1.4-1.4-2.5-3.2-3.1-5.2-.1-.4-.1-.8 0-1.2.2-.6.7-1.1 1.3-1.4.3-.1.7-.1 1 0 .3.1.5.3.7.5l1.3 1.8c.2.3.2.6 0 .8l-.7.7c.5 1 1.2 1.9 2.1 2.5.9.7 1.9 1.2 2.9 1.5l.6-.7c.3-.3.7-.3 1 0l1.5 1.3c.4.3.5.8.3 1.1z"/>
+            </svg>
+        </span>
+        Viber
+    </a>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SCRIPTS
+══════════════════════════════════ -->
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ─────────────────────────────────────────
+       VIDEO SCROLL SCRUB
+    ───────────────────────────────────────── */
+    const video      = document.getElementById('tooth-video');
+    const progress   = document.getElementById('video-progress');
+    const scrollHint = document.getElementById('scroll-hint');
+    const header     = document.getElementById('site-header');
+
+    let videoDuration = 8; // fallback, update on load
+
+    // Preload video and get accurate duration
+    video.addEventListener('loadedmetadata', () => {
+        videoDuration = video.duration;
+        video.currentTime = 0;
+        video.classList.add('ready');
+    });
+
+    // Force preload
+    video.load();
+
+    // ── Animate hero text in on page load ──
+    const tl = gsap.timeline({ delay: 0.3 });
+    tl.to('#hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' })
+      .to('#hero-title',   { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.4')
+      .to('#hero-sub',     { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.3')
+      .to('#hero-stats',   { opacity: 1,        duration: 0.5, ease: 'power2.out' }, '-=0.2')
+      .to('#scroll-hint',  { opacity: 1,        duration: 0.5, ease: 'power2.out' }, '-=0.1');
+
+    // ── Scroll scrub: video.currentTime driven by scroll progress ──
+    ScrollTrigger.create({
+        trigger: '#hero-wrapper',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.3,          // slight smoothing
+        pin: '#hero-pin',
+        pinSpacing: false,   // wrapper itself provides spacing
+        onUpdate: (self) => {
+            const p = self.progress;
+
+            // Scrub video
+            if (video.readyState >= 2) {
+                video.currentTime = p * videoDuration;
+            }
+
+            // Progress bar
+            progress.style.width = (p * 100) + '%';
+
+            // Fade scroll hint out quickly
+            if (p > 0.04) {
+                scrollHint.style.opacity = 0;
+            } else {
+                scrollHint.style.opacity = '';
+            }
+
+            // Overlay text: fade out as video starts playing (first 30% of scroll)
+            const overlayAlpha = p < 0.15 ? 1 : Math.max(0, 1 - (p - 0.15) / 0.20);
+            document.getElementById('hero-overlay').style.opacity = overlayAlpha;
+
+            // Stats: fade in when video is near end (last 20% of scroll)
+            const statsAlpha = p > 0.75 ? Math.min(1, (p - 0.75) / 0.20) : 0;
+            document.getElementById('hero-stats').style.opacity = statsAlpha;
+
+            // Header: switch styles based on scroll position
+            if (p > 0.05) {
+                header.classList.remove('on-white');
+                header.classList.add('scrolled');
+            } else {
+                header.classList.add('on-white');
+                header.classList.remove('scrolled');
+            }
+        }
+    });
+
+    /* ─────────────────────────────────────────
+       SECTION REVEALS (scroll-triggered)
+    ───────────────────────────────────────── */
+    gsap.utils.toArray('.reveal').forEach((el) => {
+        gsap.fromTo(el,
+            { opacity: 0, y: 30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%',
+                    once: true,
+                }
+            }
+        );
+    });
+
+    /* ─────────────────────────────────────────
+       HEADER STATE (fallback for non-hero sections)
+    ───────────────────────────────────────── */
+    ScrollTrigger.create({
+        trigger: '.section-about',
+        start: 'top top',
+        onEnter: () => {
+            header.classList.add('scrolled');
+            header.classList.remove('on-white');
+        },
+        onLeaveBack: () => {
+            // Let the hero scrub handle it
+        }
+    });
+
+    /* ─────────────────────────────────────────
+       PREFERS REDUCED MOTION
+    ───────────────────────────────────────── */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // Disable GSAP animations, show content immediately
+        gsap.utils.toArray('.reveal, #hero-eyebrow, #hero-title, #hero-sub, #hero-cta, #hero-stats').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
+        // Pause video, just show first frame
+        video.pause();
+    }
+
+})();
+</script>
+
+</body>
+</html>
